@@ -1,11 +1,11 @@
 {
-  "name": "motorluv",
+  "name": "iverify",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "serve": "node index",
-    "start": "nodemon index"
+    "start": "node index"
   },
   "keywords": [],
   "author": "",

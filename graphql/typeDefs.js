@@ -7,6 +7,7 @@ module.exports = gql`
     name: String!
     surname: String!
     email: String!
+    gender: String!
     phoneNumber: String!
     address: String!
     postalCode: String
@@ -20,6 +21,11 @@ module.exports = gql`
     idBook: String
     bankStatement: String
     affidavid: String
+    companyName: String
+    companyEmail: String
+    companyPhoneNumber: String
+    income: Int
+    sourceOfIncome: String
     createdAt: String!
   }
 
@@ -28,6 +34,7 @@ module.exports = gql`
     name: String!
     surname: String!
     email: String!
+    gender: String!
     phoneNumber: String!
     address: String!
     postalCode: String
@@ -40,6 +47,11 @@ module.exports = gql`
     idBook: String
     bankStatement: String
     affidavid: String
+    companyName: String
+    companyEmail: String
+    companyPhoneNumber: String
+    income: Int
+    sourceOfIncome: String
   }
 
   type User {
@@ -48,7 +60,9 @@ module.exports = gql`
     surname: String!
     email: String!
     phoneNumber: String!
+    idNumber: String!
     password: String!
+    token: String!
     createdAt: String!
   }
 
@@ -57,7 +71,7 @@ module.exports = gql`
     surname: String!
     email: String!
     phoneNumber: String!
-    password: String!
+    idNumber: String!
   }
 
   type Calendar {
@@ -76,7 +90,7 @@ module.exports = gql`
   }
 
   type Query {
-    getApplications: [Applications]
+    getApplications(userId: String!): [Applications]
     getUsers: [User]
     getCalendar: [Calendar]
   }

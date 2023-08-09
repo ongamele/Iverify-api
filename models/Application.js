@@ -5,6 +5,7 @@ const applicationSchema = new Schema({
   name: String,
   surname: String,
   email: String,
+  gender: String,
   address: String,
   phoneNumber: String,
   postalCode: String,
@@ -19,6 +20,10 @@ const applicationSchema = new Schema({
   idBook: String,
   bankStatement: String,
   affidavid: String,
+  companyName: String,
+  companyEmail: String,
+  income: Number,
+  sourceOfIncome: String,
   createdAt: String,
 });
 

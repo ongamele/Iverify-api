@@ -12,6 +12,7 @@ function generateToken(user) {
       email: user.email,
       password: user.password,
       phoneNumber: user.phoneNumber,
+      idNumber: user.idNumber,
     },
     SECRETE_KEY,
     { expiresIn: "2h" }
@@ -37,23 +38,40 @@ module.exports = {
 
       if (!user) {
         const errors = "User not found";
+        console.log(errors);
         return errors;
       }
 
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         const wrondError = "Wrong credentials";
+        console.log(wrongError);
         return wrongError;
       }
-
       const token = generateToken(user);
       return { ...user._doc, id: user._id, token };
     },
     async createUser(
       _,
-      { registerInput: { name, surname, phoneNumber, email, password } }
+      { registerInput: { name, surname, phoneNumber, email, idNumber } }
     ) {
       //TODO Validate user data }
+
+      function generateRandomString(length) {
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let randomString = "";
+
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          randomString += characters.charAt(randomIndex);
+        }
+
+        return randomString;
+      }
+
+      var password = generateRandomString(6);
+      console.log(password);
       password = await bcrypt.hash(password, 12);
 
       const newUser = new User({
@@ -61,6 +79,7 @@ module.exports = {
         surname,
         phoneNumber,
         email,
+        idNumber,
         password,
         createdAt: new Date().toISOString(),
       });

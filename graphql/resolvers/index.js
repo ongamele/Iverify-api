@@ -6,7 +6,7 @@ const timesResolvers = require("./times");
 module.exports = {
   Query: {
     ...applicationResolvers.Query,
-    ...userResolvers.Quesy,
+    ...userResolvers.Query,
     ...calendarResolvers.Query,
     ...timesResolvers.Query,
   },

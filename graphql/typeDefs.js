@@ -8,11 +8,11 @@ module.exports = gql`
     surname: String!
     email: String!
     gender: String!
-    phoneNumber: String!
+    phoneNumber: Int
     address: String!
     postalCode: String
+    municipality: String
     country: String!
-    municipalAcc: String
     race: String
     houseHoldHead: Boolean
     maritalStatus: String
@@ -23,9 +23,24 @@ module.exports = gql`
     affidavid: String
     companyName: String
     companyEmail: String
-    companyPhoneNumber: String
+    companyPhoneNumber: Int
     income: Int
     sourceOfIncome: String
+    standType: String
+    suburb: String
+    wardNumber: String
+    companyRegNumber: String
+    companyType: String
+    applicantIdNumber: String
+    applicantName: String
+    applicantSurname: String
+    applicantPhoneNumber: Int
+    applicantRelationship: String
+    spauseIdNumber: String
+    spauseName: String
+    spauseSurname: String
+    sassaNumber: String
+    ageRange: String
     createdAt: String!
   }
 
@@ -35,10 +50,10 @@ module.exports = gql`
     surname: String!
     email: String!
     gender: String!
-    phoneNumber: String!
+    phoneNumber: Int!
     address: String!
     postalCode: String
-    municipalAcc: String
+    municipality: String
     race: String!
     country: String!
     houseHoldHead: Boolean
@@ -52,6 +67,21 @@ module.exports = gql`
     companyPhoneNumber: String
     income: Int
     sourceOfIncome: String
+    standType: String
+    suburb: String
+    wardNumber: String
+    companyRegNumber: String
+    companyType: String
+    applicantIdNumber: String
+    applicantName: String
+    applicantSurname: String
+    applicantPhoneNumber: Int
+    applicantRelationship: String
+    spauseIdNumber: String
+    spauseName: String
+    spauseSurname: String
+    sassaNumber: String
+    ageRange: String
   }
 
   type User {
@@ -91,12 +121,17 @@ module.exports = gql`
 
   type Query {
     getApplications(userId: String!): [Applications]
+    getSuccessfulApplications(userId: String!): Int!
+    getFailedApplications(userId: String!): Int!
+    getAllApplications(userId: String!): Int!
+    getLatestApplications(userId: String!): Int!
     getUsers: [User]
     getCalendar: [Calendar]
   }
   type Mutation {
     createApplication(applicationInput: ApplicationInput): Applications!
     login(email: String!, password: String!): User!
+    loginSuperuser(email: String!, password: String!): String!
     getUser(id: String!): User!
     createUser(registerInput: RegisterInput): User!
     createCalendar(date: String!): String!

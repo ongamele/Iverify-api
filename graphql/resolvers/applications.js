@@ -19,6 +19,58 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    async getSuccessfulApplications(_, { userId }) {
+      try {
+        const count = await Application.countDocuments({
+          userId: userId,
+          status: "Approved",
+        });
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getFailedApplications(_, { userId }) {
+      try {
+        const count = await Application.countDocuments({
+          userId: userId,
+          status: "Declined",
+        });
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllApplications(_, { userId }) {
+      try {
+        const count = await Application.countDocuments({
+          userId: userId,
+        });
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getLatestApplications(_, { userId }) {
+      try {
+        const today = new Date();
+        const lastWeek = new Date(today);
+        lastWeek.setDate(today.getDate() - 7);
+
+        const count = await Application.countDocuments({
+          userId: userId,
+          createdAt: { $gte: lastWeek },
+        });
+
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 
   Mutation: {
@@ -26,54 +78,84 @@ module.exports = {
       _,
       {
         applicationInput: {
-          userId,
           name,
+          userId,
           surname,
+          idNumber,
           email,
           gender,
           phoneNumber,
+          country,
+          race,
           address,
           postalCode,
-          country,
-          municipalAcc,
-          race,
-          houseHoldHead,
+          householdHead,
           maritalStatus,
           dependents,
           idBook,
           bankStatement,
           affidavid,
           companyName,
-          companyEmail,
           companyPhoneNumber,
+          companyEmail,
           income,
           sourceOfIncome,
+          standType,
+          suburb,
+          wardNumber,
+          municipality,
+          companyRegNumber,
+          companyType,
+          applicantIdNumber,
+          applicantName,
+          applicantSurname,
+          applicantPhoneNumber,
+          applicantRelationship,
+          spauseIdNumber,
+          spauseName,
+          spauseSurname,
+          sassaNumber,
         },
       }
     ) {
       const newApplication = new Application({
-        userId,
         name,
+        userId,
         surname,
+        idNumber,
         email,
         gender,
         phoneNumber,
+        country,
+        race,
         address,
         postalCode,
-        country,
-        municipalAcc,
-        race,
-        houseHoldHead,
+        householdHead,
         maritalStatus,
         dependents,
         idBook,
         bankStatement,
         affidavid,
         companyName,
-        companyEmail,
         companyPhoneNumber,
+        companyEmail,
         income,
         sourceOfIncome,
+        standType,
+        suburb,
+        wardNumber,
+        municipality,
+        companyRegNumber,
+        companyType,
+        applicantIdNumber,
+        applicantName,
+        applicantSurname,
+        applicantPhoneNumber,
+        applicantRelationship,
+        spauseIdNumber,
+        spauseName,
+        spauseSurname,
+        sassaNumber,
         status: "pending",
         createdAt: new Date().toISOString(),
       });

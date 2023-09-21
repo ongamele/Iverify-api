@@ -53,9 +53,48 @@ module.exports = {
     },
     async createUser(
       _,
-      { registerInput: { name, surname, phoneNumber, email, idNumber } }
+      {
+        registerInput: {
+          name,
+          surname,
+          phoneNumber,
+          email,
+          idNumber,
+          municipality,
+        },
+      }
     ) {
-      //TODO Validate user data }
+      //Send SMS
+      /* const axios = require('axios');
+
+const apiKey = 'YOUR_API_KEY'; // Replace with your Infobip API key
+const sender = 'YOUR_SENDER_ID'; // Replace with your sender ID
+const phoneNumber = 'RECIPIENT_PHONE_NUMBER'; // Replace with the recipient's phone number
+const message = 'Hello, this is a test message!'; // Replace with your desired message
+
+const infobipApiUrl = 'https://api.infobip.com/sms/1/text/single';
+
+const config = {
+  headers: {
+    'Authorization': `App ${apiKey}`,
+    'Content-Type': 'application/json',
+  },
+};
+
+const data = {
+  from: sender,
+  to: phoneNumber,
+  text: message,
+};
+
+axios.post(infobipApiUrl, data, config)
+  .then((response) => {
+    console.log('SMS sent successfully:', response.data);
+  })
+  .catch((error) => {
+    console.error('Error sending SMS:', error);
+  });
+*/
 
       function generateRandomString(length) {
         const characters =
@@ -81,6 +120,8 @@ module.exports = {
         email,
         idNumber,
         password,
+        municipality,
+        status: "Active",
         createdAt: new Date().toISOString(),
       });
 

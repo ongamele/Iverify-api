@@ -2,8 +2,7 @@ const bcrypt = require("bcryptjs");
 //const haversine = require("haversine-distance");
 
 const Application = require("../../models/Application");
-const Time = require("../../models/Time");
-const Calendar = require("../../models/Calendar");
+const axios = require("axios");
 
 module.exports = {
   Query: {
@@ -118,50 +117,100 @@ module.exports = {
         },
       }
     ) {
-      const newApplication = new Application({
-        name,
-        userId,
-        surname,
-        idNumber,
-        email,
-        gender,
-        phoneNumber,
-        country,
-        race,
-        address,
-        postalCode,
-        householdHead,
-        maritalStatus,
-        dependents,
-        idBook,
-        bankStatement,
-        affidavid,
-        companyName,
-        companyPhoneNumber,
-        companyEmail,
-        income,
-        sourceOfIncome,
-        standType,
-        suburb,
-        wardNumber,
-        municipality,
-        companyRegNumber,
-        companyType,
-        applicantIdNumber,
-        applicantName,
-        applicantSurname,
-        applicantPhoneNumber,
-        applicantRelationship,
-        spauseIdNumber,
-        spauseName,
-        spauseSurname,
-        sassaNumber,
-        status: "pending",
-        createdAt: new Date().toISOString(),
-      });
-      const res = await newApplication.save();
+      try {
+        const apiUrl = "https://api.bakerstreetanalytics.co.za/api/mod/lookup";
+        const accountKey =
+          "Um9maGl3YSBNdWRhdTIwMjMtMDgtMzAgMTI6NDc6NTZyb2ZoaXdhQHppbWFrby5jby56YQ==";
+        const requestBody = [
+          {
+            idn: "9109186176087",
+            firstname: "Ongamele",
+            surname: "Gebhuza",
+            mobile: "0788415424",
+            email: "ogebhuza@gmail.com",
+          },
+        ];
 
-      return { ...res._doc, id: res._id };
+        const headers = {
+          "Content-Type": "application/json",
+          accountKey: accountKey,
+        };
+
+        // Define a function to make the Axios request
+        async function makeRequest() {
+          const response = await axios.post(apiUrl, requestBody, { headers });
+          return response.data;
+        }
+
+        // Make the Axios request and get the response
+        const responseData = await makeRequest();
+
+        // Determine the status based on the response
+        let status = "Pending"; // Default status
+
+        if (
+          responseData.responseText[0][0].HomeOwnershipStatus ||
+          responseData.responseText[0][0].Income > 6000 ||
+          responseData.responseText[0][0].DeceasedStatus == false
+        ) {
+          status = "Declined";
+        } else {
+          status = "Approved";
+        }
+
+        // Now you can use the 'status' variable
+        console.log(status);
+
+        // Continue with the rest of your code
+        const newApplication = new Application({
+          name,
+          userId,
+          surname,
+          idNumber,
+          email,
+          gender,
+          phoneNumber,
+          country,
+          race,
+          address,
+          postalCode,
+          householdHead,
+          maritalStatus,
+          dependents,
+          idBook,
+          bankStatement,
+          affidavid,
+          companyName,
+          companyPhoneNumber,
+          companyEmail,
+          income,
+          sourceOfIncome,
+          standType,
+          suburb,
+          wardNumber,
+          municipality,
+          companyRegNumber,
+          companyType,
+          applicantIdNumber,
+          applicantName,
+          applicantSurname,
+          applicantPhoneNumber,
+          applicantRelationship,
+          spauseIdNumber,
+          spauseName,
+          spauseSurname,
+          sassaNumber,
+          status: status, // Set the status here
+          createdAt: new Date().toISOString(),
+        });
+
+        const res = await newApplication.save();
+
+        return { ...res._doc, id: res._id };
+      } catch (error) {
+        console.error("Error:", error);
+        throw error; // Throw the error to be caught by the caller if needed
+      }
     },
   },
 };

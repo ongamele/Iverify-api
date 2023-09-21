@@ -89,10 +89,12 @@ module.exports = gql`
     name: String!
     surname: String!
     email: String!
-    phoneNumber: String!
+    phoneNumber: Int!
     idNumber: String!
     password: String!
+    municipality: String!
     token: String!
+    status: String!
     createdAt: String!
   }
 
@@ -100,8 +102,9 @@ module.exports = gql`
     name: String!
     surname: String!
     email: String!
-    phoneNumber: String!
+    phoneNumber: Int!
     idNumber: String!
+    municipality: String!
   }
 
   type Calendar {

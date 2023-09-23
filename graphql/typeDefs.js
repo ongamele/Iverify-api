@@ -64,7 +64,7 @@ module.exports = gql`
     affidavid: String
     companyName: String
     companyEmail: String
-    companyPhoneNumber: String
+    companyPhoneNumber: Int
     income: Int
     sourceOfIncome: String
     standType: String

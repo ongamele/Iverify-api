@@ -70,6 +70,15 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    async getAllUserApplications() {
+      try {
+        const applications = await Application.countDocuments();
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 
   Mutation: {
@@ -117,7 +126,16 @@ module.exports = {
         },
       }
     ) {
+      console.log(idNumber);
       try {
+        const app = await Application.findOne({ idNumber });
+
+        if (app) {
+          const errors = "User already applied!";
+          console.log(errors);
+          return errors;
+        }
+
         const apiUrl = "https://api.bakerstreetanalytics.co.za/api/mod/lookup";
         const accountKey =
           "Um9maGl3YSBNdWRhdTIwMjMtMDgtMzAgMTI6NDc6NTZyb2ZoaXdhQHppbWFrby5jby56YQ==";
@@ -126,7 +144,7 @@ module.exports = {
             idn: "9109186176087",
             firstname: "Ongamele",
             surname: "Gebhuza",
-            mobile: "0788415424",
+            mobile: "27788415424",
             email: "ogebhuza@gmail.com",
           },
         ];

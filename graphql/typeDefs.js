@@ -12,6 +12,7 @@ module.exports = gql`
     address: String!
     postalCode: String
     municipality: String
+    idNumber: String!
     country: String!
     race: String
     houseHoldHead: Boolean
@@ -54,6 +55,7 @@ module.exports = gql`
     address: String!
     postalCode: String
     municipality: String
+    idNumber: String!
     race: String!
     country: String!
     houseHoldHead: Boolean
@@ -128,8 +130,8 @@ module.exports = gql`
     getFailedApplications(userId: String!): Int!
     getAllApplications(userId: String!): Int!
     getLatestApplications(userId: String!): Int!
+    getAllUserApplications: Int!
     getUsers: [User]
-    getCalendar: [Calendar]
   }
   type Mutation {
     createApplication(applicationInput: ApplicationInput): Applications!
@@ -137,11 +139,6 @@ module.exports = gql`
     loginSuperuser(email: String!, password: String!): String!
     getUser(id: String!): User!
     createUser(registerInput: RegisterInput): User!
-    createCalendar(date: String!): String!
-    createTime(dateId: String!, times: [String!]): String!
-    deleteDate(id: String!): String!
-    deleteTime(id: String!): String!
-    getTimes(dateId: String!): [Times]
     updateRequestStatus(id: String!, status: String!): String!
   }
 `;

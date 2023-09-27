@@ -132,7 +132,7 @@ module.exports = {
 
         if (app) {
           const errors = "User already applied!";
-          console.log(errors);
+
           return errors;
         }
 
@@ -177,7 +177,7 @@ module.exports = {
         }
 
         // Now you can use the 'status' variable
-        console.log(status);
+        //console.log(status);
 
         // Continue with the rest of your code
         const newApplication = new Application({
@@ -222,9 +222,9 @@ module.exports = {
           createdAt: new Date().toISOString(),
         });
 
-        const res = await newApplication.save();
+        await newApplication.save();
 
-        return { ...res._doc, id: res._id };
+        return `Your application was ${status}`;
       } catch (error) {
         console.error("Error:", error);
         throw error; // Throw the error to be caught by the caller if needed

@@ -134,7 +134,7 @@ module.exports = gql`
     getUsers: [User]
   }
   type Mutation {
-    createApplication(applicationInput: ApplicationInput): Applications!
+    createApplication(applicationInput: ApplicationInput): String!
     login(email: String!, password: String!): User!
     loginSuperuser(email: String!, password: String!): String!
     getUser(id: String!): User!

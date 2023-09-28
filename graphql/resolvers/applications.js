@@ -104,10 +104,9 @@ module.exports = {
   },
 
   Mutation: {
-    async createApplication(
-      _,
-      {
-        applicationInput: {
+    async createApplication(_, { applicationInput }) {
+      try {
+        const {
           name,
           userId,
           surname,
@@ -145,16 +144,12 @@ module.exports = {
           spauseName,
           spauseSurname,
           sassaNumber,
-        },
-      }
-    ) {
-      console.log(idNumber);
-      try {
+        } = applicationInput;
+
         const app = await Application.findOne({ idNumber });
 
         if (app) {
           const errors = "User already applied!";
-
           return errors;
         }
 
@@ -176,47 +171,15 @@ module.exports = {
           accountKey: accountKey,
         };
 
-        // Define a function to make the Axios request
         async function makeRequest() {
           const response = await axios.post(apiUrl, requestBody, { headers });
           return response.data;
         }
 
-        // Make the Axios request and get the response
         const responseData = await makeRequest();
+        let status = "Pending";
+        let reason = "Inconclusive";
 
-        // Determine the status based on the response
-        let status = "Pending"; // Default status
-        let reason = "";
-
-        if (responseData.responseText[0][0].HomeOwnershipStatus == true) {
-          status = "Declined";
-          reason = "Home Ownership";
-        }
-
-        if (responseData.responseText[0][0].Income > 6000) {
-          status = "Declined";
-          reason = "High Income";
-        }
-
-        if (responseData.responseText[0][0].DeceasedStatus == true) {
-          status = "Declined";
-          reason = "Deceased";
-        }
-
-        if (
-          sourceOfIncome == "Sassa" &&
-          responseData.responseText[0][0].DeceasedStatus == false &&
-          responseData.responseText[0][0].Income < 6000
-        ) {
-          status = "Approved";
-          reason = "Sassa benneficiary";
-        }
-
-        // Now you can use the 'status' variable
-        //console.log(status);
-
-        // Continue with the rest of your code
         const newApplication = new Application({
           name,
           userId,
@@ -262,10 +225,64 @@ module.exports = {
 
         await newApplication.save();
 
+        if (parseInt(responseData.responseText[0][0].Income) > 6000) {
+          status = "Declined";
+          reason = "High Income";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (responseData.responseText[0][0].DeceasedStatus == "True") {
+          status = "Declined";
+          reason = "Deceased";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (responseData.responseText[0][0].DirectorshipStatus == "True") {
+          status = "Declined";
+          reason = "Company Ownership";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (
+          sourceOfIncome == "Sassa" &&
+          responseData.responseText[0][0].DeceasedStatus == "False"
+        ) {
+          status = "Approved";
+          reason = "Sassa beneficiary";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (
+          parseInt(responseData.responseText[0][0].Income) < 6000 &&
+          responseData.responseText[0][0].DeceasedStatus == "False"
+        ) {
+          status = "Approved";
+          reason = "Low Income";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (
+          parseInt(responseData.responseText[0][0].Age) < 18 &&
+          responseData.responseText[0][0].DeceasedStatus == "False"
+        ) {
+          status = "Approved";
+          reason = "Child Headed Household";
+          return `Your application was ${status}. ${reason}`;
+        }
+
+        if (
+          parseInt(responseData.responseText[0][0].Age) < 60 &&
+          responseData.responseText[0][0].DeceasedStatus == "False"
+        ) {
+          status = "Approved";
+          reason = "Applicant is a pensioner";
+          return `Your application was ${status}. ${reason}`;
+        }
+
         return `Your application was ${status}. ${reason}`;
       } catch (error) {
         console.error("Error:", error);
-        throw error; // Throw the error to be caught by the caller if needed
+        throw error;
       }
     },
 

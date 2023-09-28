@@ -42,6 +42,7 @@ module.exports = gql`
     spauseSurname: String
     sassaNumber: String
     ageRange: String
+    reason: String
     createdAt: String!
   }
 
@@ -107,6 +108,7 @@ module.exports = gql`
     phoneNumber: Int!
     idNumber: String!
     municipality: String!
+    password: String!
   }
 
   type Calendar {
@@ -132,6 +134,8 @@ module.exports = gql`
     getLatestApplications(userId: String!): Int!
     getAllUserApplications: Int!
     getUsers: [User]
+    getAllApproved: Int!
+    getAllDeclined: Int!
   }
   type Mutation {
     createApplication(applicationInput: ApplicationInput): String!

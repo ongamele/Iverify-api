@@ -61,56 +61,10 @@ module.exports = {
           email,
           idNumber,
           municipality,
+          password,
         },
       }
     ) {
-      //Send SMS
-      /* const axios = require('axios');
-
-const apiKey = 'YOUR_API_KEY'; // Replace with your Infobip API key
-const sender = 'YOUR_SENDER_ID'; // Replace with your sender ID
-const phoneNumber = 'RECIPIENT_PHONE_NUMBER'; // Replace with the recipient's phone number
-const message = 'Hello, this is a test message!'; // Replace with your desired message
-
-const infobipApiUrl = 'https://api.infobip.com/sms/1/text/single';
-
-const config = {
-  headers: {
-    'Authorization': `App ${apiKey}`,
-    'Content-Type': 'application/json',
-  },
-};
-
-const data = {
-  from: sender,
-  to: phoneNumber,
-  text: message,
-};
-
-axios.post(infobipApiUrl, data, config)
-  .then((response) => {
-    console.log('SMS sent successfully:', response.data);
-  })
-  .catch((error) => {
-    console.error('Error sending SMS:', error);
-  });
-*/
-
-      function generateRandomString(length) {
-        const characters =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let randomString = "";
-
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          randomString += characters.charAt(randomIndex);
-        }
-
-        return randomString;
-      }
-
-      var password = generateRandomString(6);
-      console.log(password);
       password = await bcrypt.hash(password, 12);
 
       const newUser = new User({

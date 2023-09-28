@@ -44,6 +44,7 @@ const applicationSchema = new Schema({
   spauseName: String,
   spauseSurname: String,
   ageRange: String,
+  reason: String,
   createdAt: String,
 });
 

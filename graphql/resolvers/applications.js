@@ -79,6 +79,28 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    async getAllApproved() {
+      try {
+        const count = await Application.countDocuments({
+          status: "Approved",
+        });
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllDeclined() {
+      try {
+        const count = await Application.countDocuments({
+          status: "Declined",
+        });
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 
   Mutation: {
@@ -165,15 +187,30 @@ module.exports = {
 
         // Determine the status based on the response
         let status = "Pending"; // Default status
+        let reason = "";
+
+        if (responseData.responseText[0][0].HomeOwnershipStatus == true) {
+          status = "Declined";
+          reason = "Home Ownership";
+        }
+
+        if (responseData.responseText[0][0].Income > 6000) {
+          status = "Declined";
+          reason = "High Income";
+        }
+
+        if (responseData.responseText[0][0].DeceasedStatus == true) {
+          status = "Declined";
+          reason = "Deceased";
+        }
 
         if (
-          responseData.responseText[0][0].HomeOwnershipStatus ||
-          responseData.responseText[0][0].Income > 6000 ||
-          responseData.responseText[0][0].DeceasedStatus == false
+          sourceOfIncome == "Sassa" &&
+          responseData.responseText[0][0].DeceasedStatus == false &&
+          responseData.responseText[0][0].Income < 6000
         ) {
-          status = "Declined";
-        } else {
           status = "Approved";
+          reason = "Sassa benneficiary";
         }
 
         // Now you can use the 'status' variable
@@ -218,13 +255,14 @@ module.exports = {
           spauseName,
           spauseSurname,
           sassaNumber,
-          status: status, // Set the status here
+          status: status,
+          reason: reason,
           createdAt: new Date().toISOString(),
         });
 
         await newApplication.save();
 
-        return `Your application was ${status}`;
+        return `Your application was ${status}. ${reason}`;
       } catch (error) {
         console.error("Error:", error);
         throw error; // Throw the error to be caught by the caller if needed

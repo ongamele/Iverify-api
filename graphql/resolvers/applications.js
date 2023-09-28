@@ -268,5 +268,14 @@ module.exports = {
         throw error; // Throw the error to be caught by the caller if needed
       }
     },
+
+    async getSelectedApplication(_, { id }) {
+      try {
+        const application = await Application.findById(id);
+        return application;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 };

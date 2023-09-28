@@ -144,5 +144,6 @@ module.exports = gql`
     getUser(id: String!): User!
     createUser(registerInput: RegisterInput): User!
     updateRequestStatus(id: String!, status: String!): String!
+    getSelectedApplication(id: String!): Applications!
   }
 `;

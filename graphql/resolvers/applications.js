@@ -180,66 +180,153 @@ module.exports = {
         let status = "Pending";
         let reason = "Inconclusive";
 
-        const newApplication = new Application({
-          name,
-          userId,
-          surname,
-          idNumber,
-          email,
-          gender,
-          phoneNumber,
-          country,
-          race,
-          address,
-          postalCode,
-          householdHead,
-          maritalStatus,
-          dependents,
-          idBook,
-          bankStatement,
-          affidavid,
-          companyName,
-          companyPhoneNumber,
-          companyEmail,
-          income,
-          sourceOfIncome,
-          standType,
-          suburb,
-          wardNumber,
-          municipality,
-          companyRegNumber,
-          companyType,
-          applicantIdNumber,
-          applicantName,
-          applicantSurname,
-          applicantPhoneNumber,
-          applicantRelationship,
-          spauseIdNumber,
-          spauseName,
-          spauseSurname,
-          sassaNumber,
-          status: status,
-          reason: reason,
-          createdAt: new Date().toISOString(),
-        });
-
-        await newApplication.save();
-
         if (parseInt(responseData.responseText[0][0].Income) > 6000) {
           status = "Declined";
           reason = "High Income";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
         if (responseData.responseText[0][0].DeceasedStatus == "True") {
           status = "Declined";
           reason = "Deceased";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
         if (responseData.responseText[0][0].DirectorshipStatus == "True") {
           status = "Declined";
           reason = "Company Ownership";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
@@ -249,6 +336,50 @@ module.exports = {
         ) {
           status = "Approved";
           reason = "Sassa beneficiary";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
@@ -258,6 +389,50 @@ module.exports = {
         ) {
           status = "Approved";
           reason = "Low Income";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
@@ -267,6 +442,50 @@ module.exports = {
         ) {
           status = "Approved";
           reason = "Child Headed Household";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 
@@ -276,6 +495,50 @@ module.exports = {
         ) {
           status = "Approved";
           reason = "Applicant is a pensioner";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
           return `Your application was ${status}. ${reason}`;
         }
 

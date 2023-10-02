@@ -207,6 +207,58 @@ module.exports = {
         let status = "Pending";
         let reason = "Inconclusive";
 
+        if (
+          parseInt(responseData.responseText[0][0].PropertyValuation) > 500000
+        ) {
+          status = "Declined";
+          reason = "High Property Value";
+          const newApplication = new Application({
+            name,
+            userId,
+            surname,
+            idNumber,
+            email,
+            gender,
+            phoneNumber,
+            country,
+            race,
+            address,
+            postalCode,
+            householdHead,
+            maritalStatus,
+            dependents,
+            idBook,
+            bankStatement,
+            affidavid,
+            companyName,
+            companyPhoneNumber,
+            companyEmail,
+            income,
+            sourceOfIncome,
+            standType,
+            suburb,
+            wardNumber,
+            municipality,
+            companyRegNumber,
+            companyType,
+            applicantIdNumber,
+            applicantName,
+            applicantSurname,
+            applicantPhoneNumber,
+            applicantRelationship,
+            spauseIdNumber,
+            spauseName,
+            spauseSurname,
+            sassaNumber,
+            status: status,
+            reason: reason,
+            createdAt: new Date().toISOString(),
+          });
+
+          await newApplication.save();
+          return `Your application was ${status}. ${reason}`;
+        }
+
         if (parseInt(responseData.responseText[0][0].Income) > 6000) {
           status = "Declined";
           reason = "High Income";

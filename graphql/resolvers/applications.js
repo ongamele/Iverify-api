@@ -19,7 +19,34 @@ module.exports = {
       }
     },
 
-    async getSuccessfulApplications(_, { userId }) {
+    async getAllApprovedApplications(_, { userId }) {
+      try {
+        const applications = await Application.find({
+          userId: userId,
+          status: "Approved",
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllDeclinedApplications(_, { userId }) {
+      try {
+        const applications = await Application.find({
+          userId: userId,
+          status: "Declined",
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getSuccessfulApplicationsCount(_, { userId }) {
       try {
         const count = await Application.countDocuments({
           userId: userId,
@@ -31,7 +58,7 @@ module.exports = {
       }
     },
 
-    async getFailedApplications(_, { userId }) {
+    async getFailedApplicationsCount(_, { userId }) {
       try {
         const count = await Application.countDocuments({
           userId: userId,
@@ -43,7 +70,7 @@ module.exports = {
       }
     },
 
-    async getAllApplications(_, { userId }) {
+    async getAllApplicationsCount(_, { userId }) {
       try {
         const count = await Application.countDocuments({
           userId: userId,
@@ -54,7 +81,7 @@ module.exports = {
       }
     },
 
-    async getLatestApplications(_, { userId }) {
+    async getLatestApplicationsCount(_, { userId }) {
       try {
         const today = new Date();
         const lastWeek = new Date(today);
@@ -71,7 +98,7 @@ module.exports = {
       }
     },
 
-    async getAllUserApplications() {
+    async getAllUserApplicationsCount() {
       try {
         const applications = await Application.countDocuments();
         return applications;
@@ -80,7 +107,7 @@ module.exports = {
       }
     },
 
-    async getAllApproved() {
+    async getAllApprovedCount() {
       try {
         const count = await Application.countDocuments({
           status: "Approved",
@@ -91,7 +118,7 @@ module.exports = {
       }
     },
 
-    async getAllDeclined() {
+    async getAllDeclinedCount() {
       try {
         const count = await Application.countDocuments({
           status: "Declined",
@@ -310,6 +337,7 @@ module.exports = {
             suburb,
             wardNumber,
             municipality,
+            municipalAccountNumber,
             companyRegNumber,
             companyType,
             applicantIdNumber,
@@ -363,6 +391,7 @@ module.exports = {
             suburb,
             wardNumber,
             municipality,
+            municipalAccountNumber,
             companyRegNumber,
             companyType,
             applicantIdNumber,

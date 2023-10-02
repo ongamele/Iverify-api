@@ -10,6 +10,7 @@ const applicationSchema = new Schema({
   phoneNumber: Number,
   postalCode: String,
   municipality: String,
+  municipalAccountNumber: String,
   idNumber: String,
   race: String,
   country: String,

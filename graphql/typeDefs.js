@@ -12,6 +12,7 @@ module.exports = gql`
     address: String!
     postalCode: String
     municipality: String
+    municipalAccountNumber: String
     idNumber: String!
     country: String!
     race: String
@@ -56,6 +57,7 @@ module.exports = gql`
     address: String!
     postalCode: String
     municipality: String
+    municipalAccountNumber: String
     idNumber: String!
     race: String!
     country: String!
@@ -128,14 +130,16 @@ module.exports = gql`
 
   type Query {
     getApplications(userId: String!): [Applications]
-    getSuccessfulApplications(userId: String!): Int!
-    getFailedApplications(userId: String!): Int!
-    getAllApplications(userId: String!): Int!
-    getLatestApplications(userId: String!): Int!
-    getAllUserApplications: Int!
+    getSuccessfulApplicationsCount(userId: String!): Int!
+    getFailedApplicationsCount(userId: String!): Int!
+    getAllApplicationsCount(userId: String!): Int!
+    getLatestApplicationsCount(userId: String!): Int!
+    getAllUserApplicationsCount: Int!
     getUsers: [User]
-    getAllApproved: Int!
-    getAllDeclined: Int!
+    getAllApprovedCount: Int!
+    getAllDeclinedCount: Int!
+    getAllApprovedApplications(userId: String!): [Applications]
+    getAllDeclinedApplications(userId: String!): [Applications]
   }
   type Mutation {
     createApplication(applicationInput: ApplicationInput): String!

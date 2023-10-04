@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../../models/User");
 const { SECRETE_KEY } = require("../../config");
+const sendMail = require("../../util/sendMail");
 
 function generateToken(user) {
   return jwt.sign(
@@ -50,6 +51,41 @@ module.exports = {
       }
       const token = generateToken(user);
       return { ...user._doc, id: user._id, token };
+    },
+
+    async forgotPassword(_, { email }) {
+      const usr = await User.findOne({ email });
+      console.log(usr.email);
+      if (!usr) {
+        return "User was not found.";
+      }
+
+      let token = Math.floor(100000 + Math.random() * 900000);
+
+      const url = `https://scintillating-melba-20b53d.netlify.app/forgot-password/${usr._id}/reset/${token}`;
+
+      sendMail(usr.email, "Reset Password", url);
+
+      return "Please check your email and reset password!";
+    },
+    async updatePassword(_, { id, password }) {
+      try {
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const user = await User.findByIdAndUpdate(
+          id,
+          { password: hashedPassword },
+          { new: true } // To return the updated user
+        );
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        return "Password changed successfully";
+      } catch (err) {
+        throw new Error(err.message);
+      }
     },
     async createUser(
       _,

@@ -140,10 +140,19 @@ module.exports = gql`
     getAllDeclinedCount: Int!
     getAllApprovedApplications(userId: String!): [Applications]
     getAllDeclinedApplications(userId: String!): [Applications]
+    getApprovedMunicipalityApplicationsCount(municipality: String!): Int!
+    getDeclinedMunicipalityApplicationsCount(municipality: String!): Int!
+    getPendingMunicipalityApplicationsCount(municipality: String!): Int!
+    getTotalMunicipalityApplicationsCount(municipality: String!): Int!
+    getAllMunicipalityApplications(municipality: String!): [Applications]
+    getAllExcelApplications: [Applications]
+    getActiveIndigents: [Applications]
   }
   type Mutation {
     createApplication(applicationInput: ApplicationInput): String!
     login(email: String!, password: String!): User!
+    forgotPassword(email: String!): String!
+    updatePassword(id: String!, password: String!): String!
     loginSuperuser(email: String!, password: String!): String!
     getUser(id: String!): User!
     createUser(registerInput: RegisterInput): User!

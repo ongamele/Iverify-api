@@ -128,6 +128,91 @@ module.exports = {
         throw new Error(err);
       }
     },
+
+    async getApprovedMunicipalityApplicationsCount(_, { municipality }) {
+      try {
+        const count = await Application.countDocuments({
+          municipality: municipality,
+          status: "Approved",
+        });
+
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getDeclinedMunicipalityApplicationsCount(_, { municipality }) {
+      try {
+        const count = await Application.countDocuments({
+          municipality: municipality,
+          status: "Declined",
+        });
+
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getPendingMunicipalityApplicationsCount(_, { municipality }) {
+      try {
+        const count = await Application.countDocuments({
+          municipality: municipality,
+          status: "Pending",
+        });
+
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getTotalMunicipalityApplicationsCount(_, { municipality }) {
+      try {
+        const count = await Application.countDocuments({
+          municipality: municipality,
+        });
+
+        return count;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllMunicipalityApplications(_, { municipality }) {
+      try {
+        const applications = await Application.find({
+          municipality: municipality,
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllExcelApplications() {
+      try {
+        const applications = await Application.find().sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getActiveIndigents() {
+      try {
+        const applications = await Application.find({
+          status: "Approved",
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 
   Mutation: {
@@ -407,7 +492,21 @@ module.exports = {
           });
 
           await newApplication.save();
-          return `Your application was ${status}. ${reason}`;
+          var message = "";
+          if (status == "Approved") {
+            message =
+              "Application approved. Kindly provide VDM with ID Copy, Affidavit and three months bank statement.";
+          }
+          if (status == "Declined") {
+            message =
+              "Application declined. Kindly visit the municipality to re-apply after three months.";
+          }
+
+          if (status == "Pending") {
+            message =
+              "	Pending	Application incomplete. Application referred for further investigation.";
+          }
+          return `${message}. Reason: ${reason}`;
         }
 
         if (

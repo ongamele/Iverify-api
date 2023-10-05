@@ -62,7 +62,7 @@ module.exports = {
 
       let token = Math.floor(100000 + Math.random() * 900000);
 
-      const url = `https://scintillating-melba-20b53d.netlify.app/forgot-password/${usr._id}/reset/${token}`;
+      const url = `https://iverify-user.netlify.app/forgot-password/${usr._id}/reset/${token}`;
 
       sendMail(usr.email, "Reset Password", url);
 

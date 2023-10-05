@@ -138,6 +138,9 @@ module.exports = gql`
     getUsers: [User]
     getAllApprovedCount: Int!
     getAllDeclinedCount: Int!
+    getApplicationsSuperuser: [Applications]
+    getAllApprovedApplicationsSuperuser: [Applications]
+    getAllDeclinedApplicationsSuperuser: [Applications]
     getAllApprovedApplications(userId: String!): [Applications]
     getAllDeclinedApplications(userId: String!): [Applications]
     getApprovedMunicipalityApplicationsCount(municipality: String!): Int!

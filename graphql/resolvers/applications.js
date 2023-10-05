@@ -46,6 +46,42 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async getApplicationsSuperuser() {
+      try {
+        const applications = await Application.find().sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllApprovedApplicationsSuperuser() {
+      try {
+        const applications = await Application.find({
+          status: "Approved",
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllDeclinedApplicationsSuperuser() {
+      try {
+        const applications = await Application.find({
+          status: "Declined",
+        }).sort({
+          createdAt: -1,
+        });
+        return applications;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getSuccessfulApplicationsCount(_, { userId }) {
       try {
         const count = await Application.countDocuments({

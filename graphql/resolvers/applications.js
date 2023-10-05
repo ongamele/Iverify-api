@@ -270,11 +270,11 @@ module.exports = {
           "Um9maGl3YSBNdWRhdTIwMjMtMDgtMzAgMTI6NDc6NTZyb2ZoaXdhQHppbWFrby5jby56YQ==";
         const requestBody = [
           {
-            idn: "9109186176087",
-            firstname: "Ongamele",
-            surname: "Gebhuza",
-            mobile: "27788415424",
-            email: "ogebhuza@gmail.com",
+            idn: idNumber,
+            firstname: name,
+            surname: surname,
+            mobile: phoneNumber,
+            email: email,
           },
         ];
 
@@ -291,7 +291,7 @@ module.exports = {
         const responseData = await makeRequest();
         let status = "Pending";
         let reason = "Inconclusive";
-
+        console.log(JSON.stringify(responseData));
         if (
           parseInt(responseData.responseText[0][0].PropertyValuation) > 500000
         ) {

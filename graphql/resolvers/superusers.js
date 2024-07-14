@@ -5,6 +5,7 @@ module.exports = {
 
   Mutation: {
     async loginSuperuser(_, { email, password }) {
+      console.log(password);
       try {
         if (email !== "admin@iverify.co.za") {
           const errors = "User not found";

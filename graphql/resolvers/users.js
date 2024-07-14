@@ -1,9 +1,44 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 
 const User = require("../../models/User");
 const { SECRETE_KEY } = require("../../config");
 const sendMail = require("../../util/sendMail");
+
+const sendSMS = async (phoneNumber, customMessage = null) => {
+  let formattedPhoneNumber = phoneNumber.substring(1);
+
+  try {
+    const apiKey =
+      "2319f2b218dfee20edf691f73ccba12f-73d582c6-316c-4b53-a90c-1c0c1fa1c94f";
+
+    // Use custom message if provided, otherwise use the default message
+    const message =
+      customMessage ||
+      `Mohokare: Hello, Your statement is available. You can access it here https://mohokarestatements.co.za/`;
+
+    const response = await axios.post(
+      "https://api.infobip.com/sms/1/text/single",
+      {
+        from: "27872406515",
+        to: "27" + formattedPhoneNumber,
+        text: message,
+      },
+      {
+        headers: {
+          Authorization: `App ${apiKey}`,
+        },
+      }
+    );
+
+    console.log("SMS STATUS ----------------> ", response.status);
+
+    return "Statements uploaded successfully!";
+  } catch (error) {
+    console.error("Error sending SMS:", error);
+  }
+};
 
 function generateToken(user) {
   return jwt.sign(
@@ -101,12 +136,18 @@ module.exports = {
         },
       }
     ) {
+      const passToSend = password;
       password = await bcrypt.hash(password, 12);
+
+      let phoneNumberStr = String(phoneNumber);
+      if (!phoneNumberStr.startsWith("0")) {
+        phoneNumberStr = "0" + phoneNumberStr;
+      }
 
       const newUser = new User({
         name,
         surname,
-        phoneNumber,
+        phoneNumber: phoneNumberStr,
         email,
         idNumber,
         password,
@@ -116,6 +157,9 @@ module.exports = {
       });
 
       const res = await newUser.save();
+
+      let smsNote = `Iverify. Your username is ${email} & password is ${passToSend}`;
+      sendSMS(phoneNumberStr, smsNote);
       const token = generateToken(res);
 
       return { ...res._doc, id: res._id, token };

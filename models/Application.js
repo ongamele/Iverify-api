@@ -20,7 +20,6 @@ const applicationSchema = new Schema({
   spauseName: String,
   spauseSurname: String,
   dependents: Boolean,
-  status: String,
   idBook: String,
   bankStatement: String,
   affidavid: String,
@@ -30,7 +29,7 @@ const applicationSchema = new Schema({
   companyType: String,
   regNumber: String,
   companyDepartment: String,
-  income: Number,
+  income: String,
   sourceOfIncome: String,
   sassaNumber: String,
   standType: String,
@@ -46,6 +45,9 @@ const applicationSchema = new Schema({
   spauseSurname: String,
   ageRange: String,
   reason: String,
+  status: String,
+  applicationDate: String,
+  deceased: String,
   createdAt: String,
 });
 

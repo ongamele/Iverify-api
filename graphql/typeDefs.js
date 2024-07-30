@@ -3,30 +3,29 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   type Applications {
     id: ID!
-    userId: String!
-    name: String!
-    surname: String!
-    email: String!
-    gender: String!
+    userId: String
+    name: String
+    surname: String
+    email: String
+    gender: String
     phoneNumber: Int
-    address: String!
+    address: String
     postalCode: String
     municipality: String
     municipalAccountNumber: String
-    idNumber: String!
-    country: String!
+    idNumber: String
+    country: String
     race: String
     houseHoldHead: Boolean
     maritalStatus: String
     dependents: Boolean
-    status: String!
     idBook: String
     bankStatement: String
     affidavid: String
     companyName: String
     companyEmail: String
     companyPhoneNumber: Int
-    income: Int
+    income: String
     sourceOfIncome: String
     standType: String
     suburb: String
@@ -44,23 +43,26 @@ module.exports = gql`
     sassaNumber: String
     ageRange: String
     reason: String
+    status: String
+    applicationDate: String
+    deceased: String
     createdAt: String!
   }
 
   input ApplicationInput {
-    userId: String!
-    name: String!
-    surname: String!
-    email: String!
-    gender: String!
-    phoneNumber: Int!
-    address: String!
+    userId: String
+    name: String
+    surname: String
+    email: String
+    gender: String
+    phoneNumber: Int
+    address: String
     postalCode: String
     municipality: String
     municipalAccountNumber: String
-    idNumber: String!
-    race: String!
-    country: String!
+    idNumber: String
+    race: String
+    country: String
     houseHoldHead: Boolean
     maritalStatus: String
     dependents: Boolean
@@ -70,7 +72,7 @@ module.exports = gql`
     companyName: String
     companyEmail: String
     companyPhoneNumber: Int
-    income: Int
+    income: String
     sourceOfIncome: String
     standType: String
     suburb: String
@@ -86,6 +88,9 @@ module.exports = gql`
     spauseName: String
     spauseSurname: String
     sassaNumber: String
+    status: String
+    applicationDate: String
+    deceased: String
     ageRange: String
   }
 
